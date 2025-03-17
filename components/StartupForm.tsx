@@ -6,12 +6,78 @@ import { Textarea } from "./ui/textarea"
 import MDEditor from "@uiw/react-md-editor"
 import { Button } from "./ui/button"
 import { Send } from "lucide-react"
+import { formSchema } from "@/lib/validation"
+import {z} from "zod"
+import { useToast } from "@/hooks/use-toast"
+import { useRouter } from "next/navigation"
+
+
 
 function StartupForm () {
 
     const [errors, setErrors] = useState<Record<string, string>>({})
     const [pitch,setPitch] = useState("")
-    const handleFormSubmit = async function () {
+    const {toast} = useToast()
+    const router = useRouter()
+
+    const handleFormSubmit = async function (prevState: any, formData: FormData) {
+
+        try {
+            const formValues = {
+                title: formData.get("title") as string,
+                description: formData.get("description") as string,
+                category: formData.get("category") as string,
+                link: formData.get("link") as string,
+                pitch
+            }
+
+            await formSchema.parseAsync(formValues)
+            console.log(formValues)
+
+
+            // const result = await createIdea(prevState, formData, pitch)
+
+        //    if (result.status === "SUCCESS") {
+
+        //     toast ({
+        //         title: "Success",
+        //         description: "Your startup pitch has beeen creaed successfully"
+        //     })
+        //     router.push(`/startup/${result.id}`)
+
+        //    }
+
+        //    return result
+
+
+        } catch (error) {
+
+            if (error instanceof z.ZodError) {
+                const fieldErors = error.flatten().fieldErrors
+
+                setErrors(fieldErors as unknown as Record<string, string>)
+
+                toast({
+                    title: "Error",
+                    description: "Please check your input and try again",
+                    variant: "destructive"
+                })
+
+                return {...prevState, error: "Validation failed", status: "ERROR"}
+            }
+
+            toast({
+                title: "Error",
+                description: "An unexpected error has occurred",
+                variant: "destructive",
+            });
+
+            return {
+                ...prevState,
+                error: "An unexpected error has occured",
+                status: "ERROR"
+            }
+        }
 
     }
 
@@ -89,7 +155,7 @@ function StartupForm () {
 
         </div>
 
-        <Button className="startup-form_btn text-white">
+        <Button className="startup-form_btn text-white" type="submit" disabled={isPending}>
             {isPending ? "En cours d'envoi...": "Envoie ton article"}
             <Send className="size-6 ml-2" />
         </Button>
