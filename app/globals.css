@@ -1,0 +1,170 @@
+@import "tailwindcss";
+
+@plugin "tailwindcss-animate";
+
+@custom-variant dark (&:is(.dark *));
+
+
+/* Styles personnalisés */
+
+@theme {
+  --font-main: var(--font-work-sans);
+  --color-primary-pink : #EE2B69;
+  --color-200: #141413;
+  --color-little-pink: #ffe8f0;
+  --color-white-100: #f7f7f7;
+  --color-yellow: #FBE843;
+  --color-black-300: #7D8087;
+
+}
+
+@layer utilities {
+
+  .category-tag {
+    @apply font-medium text-[16px] bg-little-pink px-4 py-2 rounded-full;
+  }
+
+  .text-30-bold {
+    @apply text-[30px] font-bold text-black;
+  }
+
+  .flex-between {
+    @apply flex items-center justify-between
+  }
+
+  .text-30-semibold {
+    @apply text-[30px] font-semibold text-black
+  }
+
+  .text-16-medium {
+    @apply text-[16px] font-medium text-black
+  }
+
+  .text-20-medium {
+    @apply font-medium text-[20px] text-black;
+  }
+
+  .text-26-semibold {
+    @apply text-[26px] font-medium text-black
+  }
+
+  .heading {
+    @apply uppercase bg-black text-white px-3 py-3 font-main font-extrabold sm:text-[54px] sm:leading-[64px] text-[36px] leading-[46px] max-w-5xl text-center my-5;
+  }
+
+  .sub-heading {
+    @apply font-medium text-[20px] text-white max-w-2xl text-center break-words;
+  }
+
+  .pink_container {
+    @apply w-full bg-primary-pink  min-h-[530px]  flex justify-center items-center flex-col py-10 px-6 ;
+  }
+
+  /**Le formulaire*/
+  .search-form {
+    @apply max-w-3xl w-full min-h-[80px] bg-white border-[5px] border-black rounded-[80px] text-[24px] mt-8 px-5 flex flex-row items-center gap-5;
+  }
+
+  .search-input {
+    @apply flex-1 font-bold placeholder:font-semibold w-full h-auto outline-none;
+  }
+
+  .search-btn {
+    @apply size-[50px] rounded-full bg-black flex justify-center items-center ;
+  }
+
+  .section_container {
+    @apply mx-auto px-6 py-10 max-w-7xl
+  }
+
+  .card_grid {
+    @apply grid gap-5 md:grid-cols-3 sm:grid-cols-2
+  }
+
+  /* startupcard */
+  .startup-card {
+    @apply bg-white border-[5px] border-black py-6 px-5 rounded-[22px]
+    shadow-200 transition-all duration-500 hover:border-primary-pink
+    hover:bg-little-pink
+  }
+
+  .startup_card_date {
+    @apply font-medium text-[16px] bg-little-pink px-4 py-2 rounded-full
+    group-hover:bg-white-100
+  }
+
+  .startup-card_desc {
+    @apply break-all font-normal my-3 line-clamp-2 text-[16px] text-black
+  }
+
+  .start-card_img {
+    @apply rounded-[10px] h-[164px] w-full object-cover
+  }
+
+  .startup-card_btn {
+    @apply font-medium bg-black rounded-full px-5 py-3 text-[16px] text-white
+  }
+
+  .no-results {
+    @apply text-black text-sm font-normal;
+  }
+
+  .tag {
+    @apply bg-yellow-400 px-6 py-3  font-bold rounded-sm uppercase relative;
+  }
+
+  .tag-tri {
+    @apply before:content-[''] before:absolute before:top-2 before:left-2 before:border-t-[10px] before:border-t-black before:border-r-[10px] before:border-r-transparent after:content-[''] after:absolute after:bottom-2 after:right-2 after:border-b-[10px] after:border-b-black after:border-l-[10px] after:border-l-transparent;
+  }
+
+  .divider {
+    @apply border-dotted bg-zinc-400 max-w-4xl my-10 mx-auto;
+  }
+
+  .view_skeleton {
+    @apply bg-zinc-400 h-10 w-24 rounded-lg fixed bottom-3 right-3;
+  }
+
+  .view-container {
+    @apply flex justify-end items-center mt-5 fixed bottom-5 right-5;
+  }
+
+  .view-text {
+    @apply font-medium text-[16px] bg-little-pink px-4 py-2 rounded-lg ;
+  }
+
+  /* startupform */
+  .startup-form {
+    @apply max-w-2xl mx-auto bg-white my-10 space-y-8 px-6;
+  }
+
+  .startup-form_label {
+    @apply font-bold text-[18px] text-black uppercase;
+  }
+
+  .startup-form_input {
+    @apply border-[3px] border-black px-5 py-7 text-[18px] text-black font-semibold rounded-full mt-3 placeholder:text-black-300 ;
+  }
+
+  .startup-form_textarea {
+    @apply border-[3px] border-black p-5 text-[18px] text-black font-semibold rounded-[20px] mt-3 placeholder:text-black-300 ;
+  }
+
+  .startup-form_error {
+    @apply text-red-500 mt-2 ml-5;
+  }
+
+  .startup-form_editor {
+    @apply mt-3 border-[3px] border-black text-[18px] text-black font-semibold placeholder:text-black-300 ;
+  }
+
+  .startup-form_btn {
+    @apply bg-primary-pink border-[4px] border-black rounded-full p-5 min-h-[70px] w-full font-bold text-[18px] ;
+  }
+  
+  
+
+}
+
+
+
