@@ -1,18 +1,30 @@
 "use client"
 
-import { useState } from "react"
+import { useActionState, useState } from "react"
 import { Input } from "./ui/input"
 import { Textarea } from "./ui/textarea"
 import MDEditor from "@uiw/react-md-editor"
+import { Button } from "./ui/button"
+import { Send } from "lucide-react"
 
 function StartupForm () {
 
     const [errors, setErrors] = useState<Record<string, string>>({})
     const [pitch,setPitch] = useState("")
+    const handleFormSubmit = async function () {
+
+    }
+
+    const [state, formAction, isPending] = useActionState(handleFormSubmit,
+        {
+            error: "",
+            status: "INITIAL"
+        }
+    )
+
+   
     
-    return <form className="startup-form" action={function(){
-        {}
-    }}>
+    return <form className="startup-form" action={formAction}>
         <div>
             <label htmlFor="title" className="startup-form_label">
                 Titre
@@ -59,14 +71,28 @@ function StartupForm () {
             </label>
            <MDEditor 
                 value={pitch}
+                preview="edit"
+                height={300}
+                style={{borderRadius: 20, overflow: "hidden"}}
                 onChange={function(value){
                     return setPitch(value as string)
+                }}
+                textareaProps={{
+                    placeholder: "Décris brièvement le contanu de ton aricle"
+                }}
+                previewOptions={{
+                    disallowedElements: ["style"]
                 }}
            />
 
             {errors.pitch && <p className="startup-form_error">{errors.pitch}</p>}
 
         </div>
+
+        <Button className="startup-form_btn text-white">
+            {isPending ? "En cours d'envoi...": "Envoie ton article"}
+            <Send className="size-6 ml-2" />
+        </Button>
 
 
     </form>
