@@ -21,7 +21,7 @@ const StartupCard = function ({post}: {post: StartupTypeCard}) {
                 <div className="flex gap-1.5">
  
                     <EyeIcon className="size-6 text-primary-pink"/>
-                    <span className="text-16-medium">{views}</span>
+                    <span className="text-16-medium">{views} vue(s)</span>
                 </div>
             </div>
 

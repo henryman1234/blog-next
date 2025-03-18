@@ -10,6 +10,7 @@ import { formSchema } from "@/lib/validation"
 import {z} from "zod"
 import { useToast } from "@/hooks/use-toast"
 import { useRouter } from "next/navigation"
+import { createPitch } from "@/lib/action"
 
 
 
@@ -35,19 +36,19 @@ function StartupForm () {
             console.log(formValues)
 
 
-            // const result = await createIdea(prevState, formData, pitch)
+            const result = await createPitch(prevState, formData, pitch)
 
-        //    if (result.status === "SUCCESS") {
+           if (result.status === "SUCCESS") {
 
-        //     toast ({
-        //         title: "Success",
-        //         description: "Your startup pitch has beeen creaed successfully"
-        //     })
-        //     router.push(`/startup/${result.id}`)
+            toast ({
+                title: "Success",
+                description: "Your startup pitch has beeen creaed successfully"
+            })
+            router.push(`/startup/${result._id}`)
 
-        //    }
+           }
 
-        //    return result
+           return result
 
 
         } catch (error) {
@@ -91,11 +92,12 @@ function StartupForm () {
    
     
     return <form className="startup-form" action={formAction}>
+    
         <div>
             <label htmlFor="title" className="startup-form_label">
                 Titre
             </label>
-            <Input id="title" className="startup-form_input" required placeholder="Le titre de l'article" />
+            <Input id="title" className="startup-form_input" required placeholder="Le titre de l'article" name="title" />
 
             {errors.title && <p className="startup-form_error">{errors.title}</p>}
 
@@ -105,7 +107,7 @@ function StartupForm () {
             <label htmlFor="description" className="startup-form_label">
                 Description
             </label>
-            <Textarea id="description" className="startup-form_input" required placeholder="La description de l'article" />
+            <Textarea id="description" className="startup-form_input" required placeholder="La description de l'article" name="description"/>
 
             {errors.description && <p className="startup-form_error">{errors.description}</p>}
 
@@ -115,7 +117,7 @@ function StartupForm () {
             <label htmlFor="category" className="startup-form_label">
                 Catégorie
             </label>
-            <Input id="category" className="startup-form_input" required placeholder="Catégorie de l'article(Génie civil, Urbanisme...)" />
+            <Input id="category" name="category" className="startup-form_input" required placeholder="Catégorie de l'article(Génie civil, Urbanisme...)" />
 
             {errors.category && <p className="startup-form_error">{errors.category}</p>}
 
@@ -125,7 +127,7 @@ function StartupForm () {
             <label htmlFor="link" className="startup-form_label">
                Image(Lien)
             </label>
-            <Input id="link" className="startup-form_input" required placeholder="Le lien url de l'image" />
+            <Input id="link" name="link" className="startup-form_input" required placeholder="Le lien url de l'image" />
 
             {errors.link && <p className="startup-form_error">{errors.link}</p>}
 
