@@ -11,7 +11,7 @@ const SearchForm = function ({query}: {query?: string}) {
             name="query"
             defaultValue={query}
             className="search-input"
-            placeholder="Rechercher des articles"
+            placeholder="Rechercher des articles sur le BTP et tout..."
              />
 
             <div className="flex gap-2">

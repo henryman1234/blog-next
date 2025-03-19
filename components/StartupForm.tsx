@@ -8,17 +8,16 @@ import { Button } from "./ui/button"
 import { Send } from "lucide-react"
 import { formSchema } from "@/lib/validation"
 import {z} from "zod"
-import { useToast } from "@/hooks/use-toast"
 import { useRouter } from "next/navigation"
 import { createPitch } from "@/lib/action"
-
+import {toast}  from "react-toastify"
+import "react-toastify/dist/ReactToastify.css";
 
 
 function StartupForm () {
 
     const [errors, setErrors] = useState<Record<string, string>>({})
     const [pitch,setPitch] = useState("")
-    const {toast} = useToast()
     const router = useRouter()
 
     const handleFormSubmit = async function (prevState: any, formData: FormData) {
@@ -35,21 +34,24 @@ function StartupForm () {
             await formSchema.parseAsync(formValues)
             console.log(formValues)
 
-
             const result = await createPitch(prevState, formData, pitch)
 
-           if (result.status === "SUCCESS") {
+           if (result.status == "SUCCESS") {
 
-            toast ({
-                title: "Success",
-                description: "Your startup pitch has beeen creaed successfully"
-            })
-            router.push(`/startup/${result._id}`)
+                toast.success ("Votre article a été bien crée", {
+                    position: "top-right",
+                    hideProgressBar: false,
+                    closeOnClick:true,
+                    progress: undefined,
+                    draggable: true,
+                    autoClose: 5000,
+                    pauseOnHover: true
+                })
 
-           }
+                router.push(`/startup/${result._id}`)
+            }
 
            return result
-
 
         } catch (error) {
 
@@ -58,20 +60,28 @@ function StartupForm () {
 
                 setErrors(fieldErors as unknown as Record<string, string>)
 
-                toast({
-                    title: "Error",
-                    description: "Please check your input and try again",
-                    variant: "destructive"
+                toast.error ("Vérifie bien le contenu des champs!", {
+                    position: "top-right",
+                    hideProgressBar: false,
+                    closeOnClick:true,
+                    progress: undefined,
+                    draggable: true,
+                    autoClose: 5000,
+                    pauseOnHover: true
                 })
 
                 return {...prevState, error: "Validation failed", status: "ERROR"}
             }
 
-            toast({
-                title: "Error",
-                description: "An unexpected error has occurred",
-                variant: "destructive",
-            });
+            toast.error ("Erreur inconnue!", {
+                position: "top-right",
+                hideProgressBar: false,
+                closeOnClick:true,
+                progress: undefined,
+                draggable: true,
+                autoClose: 5000,
+                pauseOnHover: true
+            })
 
             return {
                 ...prevState,
@@ -158,7 +168,7 @@ function StartupForm () {
         </div>
 
         <Button className="startup-form_btn text-white" type="submit" disabled={isPending}>
-            {isPending ? "En cours d'envoi...": "Envoie ton article"}
+            {isPending ? "En cours d'envoi...": "Publie ton article"}
             <Send className="size-6 ml-2" />
         </Button>
 
