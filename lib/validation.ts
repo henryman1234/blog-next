@@ -7,10 +7,10 @@ export const formSchema = z.object({
     link: z.string().url().refine(async function(url){
         try {
            const res = await fetch(url, {method: "HEAD"}) 
-        //    const contentType = res.headers.get("content-type")
+           const contentType = res.headers.get("content-type")
 
-        //    return contentType?.startsWith("image/") || contentType === "application/octet-stream"
-            return res.ok
+           return contentType?.startsWith("image/");
+            // return res.ok
 
         } catch (error) {
             return false
